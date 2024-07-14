@@ -229,7 +229,7 @@ class MK_MMD(tf.keras.losses.Loss):
             for c in range(C):
                 source_c = tf.gather(source, indices=tf.squeeze(tf.where(l==c)))
                 if tf.size(tf.where(l==c)) < 2:
-                    raise ValueError('The i-th source subject does not have enough samples belonging ti the c-th attention class!')
+                    raise ValueError('The i-th source subject does not have enough samples belonging to the c-th attention class!')
 
                 target_c = y_pred[:,domains+c,:]
 
