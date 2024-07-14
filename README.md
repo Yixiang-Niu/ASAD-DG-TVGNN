@@ -1,7 +1,7 @@
 # ASAD-DG-TVGNN
 Python code for "Subject-independent auditory spatial attention detection based on brain topology modeling and feature distribution alignment", submitted to _Hearing Research_
 
-# ======================== How to use it in leave-one-subject-out cross-validation ========================
+# How to use it in leave-one-subject-out cross-validation
 directions = 2 # left / right
 channels = 64
 features = 32 # e.g., 32 frequency bands for the KUL dataset
