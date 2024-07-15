@@ -14,21 +14,17 @@ model = AAD(directions, channels, features, domains, AdjMat)
 early_stopping = tf.keras.callbacks.EarlyStopping(monitor='label_sparse_categorical_accuracy', min_delta=1e-16, patience=10,
                                                   verbose=2, mode='auto', restore_best_weights=True)
 ```
-EEG_train: differential entropy features for training
-           the shape is (num_samples_per_subject, num_subjects, num_channels, num_freqnency_bands), e.g., (10000, 15, 64, 32)
+EEG_train: differential entropy features for training. The shape is (num_samples_per_subject, num_subjects, num_channels, num_freqnency_bands), e.g., (10000, 15, 64, 32).
 
-LOC_train: ground_truth label, left is 1 and right is 2
-           the shape is (num_samples_per_subject, num_subjects), e.g., (10000, 15)
+LOC_train: ground_truth label, 1 for left and 2 for right. The shape is (num_samples_per_subject, num_subjects), e.g., (10000, 15).
 ```python
 model.fit(EEG_train,
           [LOC_train, LOC_train],
           batch_size=32, epochs=80, verbose=1, initial_epoch=0, shuffle=True,
           callbacks=[learning_rate(80, model.optimizer.lr.numpy()), Weight(w0, w1), early_stopping])
 ```
-EEG_test: differential entropy features for testing
-          with the shape of (num_samples, num_channels, num_freqnency_bands), e.g., (8000, 64, 32)
-          Simply, the differential entropy of the target subject is replicated on axis=1 to match the dimensions of EEG_train
-          the shape will be changed to  (num_samples, num_subjects, num_channels, num_freqnency_bands), e.g., (8000, 15, 64, 32)
+EEG_test: differential entropy features for testing. The shape is (num_samples, num_channels, num_freqnency_bands), e.g., (8000, 64, 32).
+          Simply, the differential entropy of the target subject is replicated on axis=1 to match the dimensions of EEG_train, and the shape will be changed to (num_samples, num_subjects, num_channels, num_freqnency_bands), e.g., (8000, 15, 64, 32)
 ```python
 EEG_test = np.tile(np.expand_dims(EEG_test,1), (1,domains,1,1))
 LOC_predict, _ = model.predict(EEG_test, verbose=0)
