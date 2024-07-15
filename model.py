@@ -229,7 +229,7 @@ class MK_MMD(tf.keras.losses.Loss):
             for c in range(C):
                 source_c = tf.gather(source, indices=tf.squeeze(tf.where(l==c)))
                 if tf.size(tf.where(l==c)) < 2:
-                    raise ValueError('The i-th source subject does not have enough samples belonging to the c-th attention class!')
+                    raise ValueError('The i-th subject does not have enough samples belonging to the c-th attention class!')
 
                 target_c = y_pred[:,domains+c,:]
 
@@ -265,7 +265,7 @@ def AAD(directions, channels, features, domains, AdjMat):
     Args:
         directions (int): 2. The number of candidate attention directions (left or right).
         channels (int): 64. The number of EEG channels.
-        features (int): 32 (KUL and SNHL datasets) or 20 (AV-GC-AAD dataset). The dimension of the differential entropy feature on each EEG channel. It depends on how many frequency bands you have.
+        features (int): 32 (KUL and SNHL datasets) or 20 (AV-GC-AAD dataset). The dimension of the differential entropy feature on each EEG channel. It depends on how many frequency bands you have set up.
         domains (int): 15. The number of subjects. For example, there are 15 subjects used for training in the KUL dataset.
         AdjMat (np.array): The precomputed adjacency matrix.
 
